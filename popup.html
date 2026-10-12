@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browser Bible</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body data-theme="night">
+    <div class="app">
+      <header>
+        <h1>Browser Bible</h1>
+        <div class="tools">
+          <button
+            class="icon-btn"
+            id="smaller"
+            title="Smaller text"
+            aria-label="Smaller text"
+          >
+            <span class="a-small">A</span>
+          </button>
+          <button
+            class="icon-btn"
+            id="larger"
+            title="Larger text"
+            aria-label="Larger text"
+          >
+            <span class="a-big">A</span>
+          </button>
+          <button
+            class="icon-btn"
+            id="themeBtn"
+            title="Change theme"
+            aria-label="Change theme"
+          >
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" />
+              <path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <form class="search" id="searchForm" autocomplete="off">
+        <div class="field">
+          <input
+            type="text"
+            id="ref"
+            placeholder="John 3:16, Psalm 23, 1 Cor 13:4-7"
+            aria-label="Passage"
+            spellcheck="false"
+          />
+          <ul id="suggest" hidden></ul>
+        </div>
+        <button type="submit" class="primary">Search</button>
+        <select id="chosenBible" aria-label="Translation">
+          <option value="cherokee">Cherokee - Cherokee New Testament</option>
+          <option value="bbe">English - Bible in Basic English</option>
+          <option value="kjv">English - King James Version</option>
+          <option value="web" selected>English - World English Bible</option>
+          <option value="oeb-cw">
+            English (UK) - Open English Bible, Commonwealth Edition
+          </option>
+          <option value="webbe">
+            English (UK) - World English Bible, British Edition
+          </option>
+          <option value="oeb-us">
+            English (US) - Open English Bible, US Edition
+          </option>
+          <option value="clementine">Latin - Clementine Latin Vulgate</option>
+          <option value="almeida">Portuguese - João Ferreira de Almeida</option>
+          <option value="rccv">
+            Romanian - Protestant Romanian Corrected Cornilescu Version
+          </option>
+        </select>
+      </form>
+
+      <nav class="tabs">
+        <button class="on" data-tab="read">Read</button>
+        <button data-tab="saved">Saved</button>
+        <button data-tab="recent">Recent</button>
+      </nav>
+
+      <main id="content">
+        <section id="readPane">
+          <div id="daily" class="daily">
+            <p class="label" id="dailyLabel">Verse for today</p>
+            <blockquote id="dailyText"></blockquote>
+            <p class="ref" id="dailyRef"></p>
+            <div class="row">
+              <button class="ghost" id="dailyOpen">Read the chapter</button>
+              <button class="ghost" id="dailyShuffle">Another verse</button>
+            </div>
+            <div class="row">
+              <button class="ghost" id="resume" hidden></button>
+            </div>
+          </div>
+
+          <p class="note" id="message" hidden></p>
+
+          <div id="reader" hidden>
+            <div class="reader-head">
+              <button
+                class="icon-btn"
+                id="prevCh"
+                title="Previous chapter"
+                aria-label="Previous chapter"
+              >
+                <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>
+              </button>
+              <div class="titles">
+                <h2 id="title"></h2>
+                <p id="versionName"></p>
+              </div>
+              <button
+                class="icon-btn"
+                id="nextCh"
+                title="Next chapter"
+                aria-label="Next chapter"
+              >
+                <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+
+            <div class="actions">
+              <button class="ghost" id="viewBtn">One at a time</button>
+              <button class="ghost" id="chapterBtn" hidden>Full chapter</button>
+              <span class="spacer"></span>
+              <button
+                class="icon-btn"
+                id="copyBtn"
+                title="Copy"
+                aria-label="Copy"
+              >
+                <svg viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="11" height="11" rx="2" />
+                  <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+                </svg>
+              </button>
+              <button
+                class="icon-btn"
+                id="saveBtn"
+                title="Save"
+                aria-label="Save"
+              >
+                <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" /></svg>
+              </button>
+            </div>
+
+            <div id="text"></div>
+
+            <div class="focus-nav" id="focusNav" hidden>
+              <button
+                class="icon-btn"
+                id="focusPrev"
+                title="Previous verse"
+                aria-label="Previous verse"
+              >
+                <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>
+              </button>
+              <span id="focusCount"></span>
+              <button
+                class="icon-btn"
+                id="focusNext"
+                title="Next verse"
+                aria-label="Next verse"
+              >
+                <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="savedPane" hidden>
+          <ul class="list" id="savedList"></ul>
+        </section>
+
+        <section id="recentPane" hidden>
+          <ul class="list" id="recentList"></ul>
+          <div class="row">
+            <button class="ghost" id="clearRecent">Clear history</button>
+          </div>
+        </section>
+      </main>
+
+      <div id="toast" role="status"></div>
+    </div>
+    <script src="content.js"></script>
+  </body>
+</html>
